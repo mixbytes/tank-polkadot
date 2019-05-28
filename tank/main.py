@@ -1,4 +1,5 @@
 import os
+import sh
 from tinydb import TinyDB
 from cement import App, TestApp, init_defaults
 from cement.core.exc import CaughtSignal
@@ -48,13 +49,13 @@ class MixbytesTank(App):
         ]
 
         # List of configuration directory
-        config_dirs = '~/.tank'
+        config_dirs = ['~/.tank', '.', 'test', 'bench']
 
         # configuration handler
         config_handler = 'yaml'
 
         # configuration file suffix
-        config_file_suffix = '.yml'
+        config_file_suffix = '.tnk'
 
         # set the log handler
         log_handler = 'colorlog'
@@ -118,7 +119,8 @@ class MixbytesTankTest(TestApp, MixbytesTank):
 def main():
     with MixbytesTank() as app:
         try:
-            # print(app.hook.list())
+            app.config.parse_file('~/.tank/config/tank.yml')
+            # print(app.config.get_dict())
             app.run()
 
         except AssertionError as e:
@@ -140,6 +142,11 @@ def main():
         except CaughtSignal as e:
             # Default Cement signals are SIGINT and SIGTERM, exit 0 (non-error)
             print('\n%s' % e)
+            app.exit_code = 0
+
+        except sh.CommandNotFound as e:
+            # Default Cement signals are SIGINT and SIGTERM, exit 0 (non-error)
+            print('You should install terraform')
             app.exit_code = 0
 
 

@@ -1,9 +1,9 @@
 
 from setuptools import setup, find_packages
-# from tank.core.version import get_version
+from tank.core.version import get_version
 import tank
 
-VERSION = tank.__version__
+VERSION = get_version()
 
 f = open('README.md', 'r')
 LONG_DESCRIPTION = f.read()
