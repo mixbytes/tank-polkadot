@@ -16,7 +16,7 @@ CONFIG = init_defaults('tank',
 CONFIG['tank']['state_file'] = '~/.tank/tank.json'
 CONFIG['tank']['provider'] = 'digitalocean'
 CONFIG['tank']['terraform_run_command'] = 'terraform'
-CONFIG['tank']['terraform_inventory_run_command'] = 'terraform-inventory'
+CONFIG['tank']['terraform_inventory_run_command'] = '/usr/local/bin/terraform-inventory'
 CONFIG['digitalocean']['private_interface'] = 'eth0'
 CONFIG['log.logging']['level'] = 'info'
 
@@ -51,13 +51,13 @@ class MixbytesTank(App):
         ]
 
         # List of configuration directory
-        config_dirs = ['~/.tank', '.', 'test', 'bench']
+        config_dirs = ['~/.tank']
 
         # configuration handler
         config_handler = 'yaml'
 
         # configuration file suffix
-        config_file_suffix = '.tnk'
+        config_file_suffix = '.yml'
 
         # set the log handler
         log_handler = 'colorlog'
@@ -142,7 +142,7 @@ class MixbytesTankTest(TestApp, MixbytesTank):
 def main():
     with MixbytesTank() as app:
         try:
-            app.config.parse_file('~/.tank/config/tank.yml')
+            # app.config.parse_file('~/.tank/config/tank.yml')
             # print(app.config.get_dict())
             app._check_terraform_availability()
             app._check_terraform_inventory_availability()

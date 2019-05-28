@@ -20,12 +20,6 @@ class Cluster(Controller):
     def process_output(self, line):
         print(line, end='', flush=True)
 
-    def approve_destroy(self, line, stdin):
-        line = line.strip()
-        print(line)
-        if line.endswith("Enter a value:"):
-            stdin.put("correcthorsebatterystaple")
-
     @ex(help='Download plugins, modules for Terraform', hide=True)
     def init(self):
         cmd = sh.Command(self.app.terraform_run_command)
@@ -95,7 +89,7 @@ class Cluster(Controller):
         cmd = sh.Command("ansible-playbook")
         p = cmd(
                 "-f", "10", "-u", "root", "-i",
-                self.app.terraform_inventory_bin_path,
+                self.app.terraform_inventory_run_command,
                 "-e", "bc_private_interface='"+self.app.config.get(self.app.provider, "private_interface")+"'",
                 "--private-key=~/.ssh/id_rsa",
                 self.app.root_dir+"/tools/ansible/play.yml",
