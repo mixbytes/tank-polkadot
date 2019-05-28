@@ -28,7 +28,7 @@ class Cluster(Controller):
 
     @ex(help='Download plugins, modules for Terraform', hide=True)
     def init(self):
-        cmd = sh.Command("terraform")
+        cmd = sh.Command(self.app.terraform_run_command)
         p = cmd(
             "init", "-backend-config", "path="+self.app.terraform_state_file,
             self.app.terraform_plan_dir,
@@ -39,7 +39,7 @@ class Cluster(Controller):
 
     @ex(help='Generate and show an execution plan by Terraform', hide=True)
     def plan(self):
-        cmd = sh.Command("terraform")
+        cmd = sh.Command(self.app.terraform_run_command)
         p = cmd(
             "plan", "-input=false", self.app.terraform_plan_dir,
             _env=self.app.app_env,
@@ -49,7 +49,7 @@ class Cluster(Controller):
 
     @ex(help='Create instances for cluster')
     def create(self):
-        cmd = sh.Command("terraform")
+        cmd = sh.Command(self.app.terraform_run_command)
         p = cmd(
                 "apply", "-auto-approve",
                 "-parallelism=100",
@@ -95,7 +95,7 @@ class Cluster(Controller):
         cmd = sh.Command("ansible-playbook")
         p = cmd(
                 "-f", "10", "-u", "root", "-i",
-                "/usr/local/bin/terraform-inventory",
+                self.app.terraform_inventory_bin_path,
                 "-e", "bc_private_interface='"+self.app.config.get(self.app.provider, "private_interface")+"'",
                 "--private-key=~/.ssh/id_rsa",
                 self.app.root_dir+"/tools/ansible/play.yml",
@@ -107,7 +107,7 @@ class Cluster(Controller):
 
     @ex(help='Destroy all instances')
     def destroy(self):
-        cmd = sh.Command("terraform")
+        cmd = sh.Command(self.app.terraform_run_command)
         p = cmd(
                 "destroy", "-auto-approve",
                 "-parallelism=100",
