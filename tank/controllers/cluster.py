@@ -110,3 +110,26 @@ class Cluster(Controller):
                 _out=self.process_output,
                 _bg=True)
         p.wait()
+
+
+class Deploy(Cluster):
+
+    class Meta:
+        label = 'deploy'
+        stacked_type = 'embedded'
+        stacked_on = 'base'
+
+        # text displayed at the top of --help output
+        description = 'OOOOOOO'
+
+        # text displayed at the bottom of --help output
+        title = 'BBBBB'
+        help = 'GGGGG'
+
+    @ex(help='Deploy')
+    def deploy(self):
+        self.init()
+        self.create()
+        self.dependency()
+        self.provision()
+

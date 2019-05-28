@@ -1,6 +1,7 @@
 
 from cement import Controller, ex
 from cement.utils.version import get_version_banner
+from ..controllers.cluster import Cluster
 from ..core.version import get_version
 
 VERSION_BANNER = """
