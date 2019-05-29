@@ -17,6 +17,7 @@ CONFIG['tank']['state_file'] = '~/.tank/tank.json'
 CONFIG['tank']['provider'] = 'digitalocean'
 CONFIG['tank']['terraform_run_command'] = 'terraform'
 CONFIG['tank']['terraform_inventory_run_command'] = '/usr/local/bin/terraform-inventory'
+CONFIG['tank']['blockchain_instances'] = 2
 CONFIG['digitalocean']['private_interface'] = 'eth0'
 CONFIG['log.logging']['level'] = 'info'
 
@@ -114,13 +115,16 @@ class MixbytesTank(App):
 
         fs.ensure_dir_exists(self.state_dir)
         fs.ensure_dir_exists(self.log_dir)
-        self.terraform_state_file = self.state_dir + "/dev-do-00001.tfstate"
+
+        self.terraform_state_file = self.state_dir + "/blockchain.tfstate"
         self.app_env = os.environ.copy()
         self.app_env["TF_LOG"] = "TRACE"
         self.app_env["TF_LOG_PATH"] = self.terraform_log_path
         self.app_env["TF_DATA_DIR"] = self.state_dir
         self.app_env["TF_IN_AUTOMATION"] = "true"
         self.app_env["TF_VAR_state_path"] = self.terraform_state_file
+        self.app_env["TF_VAR_bc_count_prod_instances"] = \
+            str(int(self.config.get(self.Meta.label, 'blockchain_instances')) - 1)
         for common_key in self.config.keys(self.Meta.label):
             self.app_env["TF_VAR_" + common_key] = \
                 self.config.get(self.Meta.label, common_key)

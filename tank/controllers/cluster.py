@@ -123,10 +123,26 @@ class Deploy(Cluster):
         description = 'OOOOOOO'
 
         # text displayed at the bottom of --help output
-        title = 'BBBBB'
-        help = 'GGGGG'
+        title = 'Create and setup cluster'
+        help = 'Create instances for cluster, and setup components of blockchain and bench-util'
 
-    @ex(help='Deploy')
+    @ex(hide=True)
+    def create(self):
+        pass
+
+    @ex(hide=True)
+    def dependency(self):
+        pass
+
+    @ex(hide=True)
+    def provision(self):
+        pass
+
+    @ex(hide=True)
+    def destroy(self):
+        pass
+
+    @ex(help='Create and setup cluster')
     def deploy(self):
         self.init()
         self.create()
