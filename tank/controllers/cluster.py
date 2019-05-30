@@ -1,4 +1,6 @@
 
+from subprocess import check_call
+
 from cement import Controller, ex
 import sh
 
@@ -98,6 +100,18 @@ class Cluster(Controller):
                 _out=self.process_output,
                 _bg=True)
         p.wait()
+
+    @ex(help='Runs bench on prepared cluster')
+    def bench(self):
+        bench_command = 'bench --common-config=/tool/bench.config.json ' \
+                        '--module-config=/tool/polkadot.bench.config.json'
+        check_call(['ansible', '-f', '100', '-B', '3600', '-P', '10', '-u', 'root',
+                    '-i', self.app.terraform_inventory_run_command,
+                    '--private-key', self.app.config.get(self.app.label, 'pvt_key'),
+                    '*producer*',
+                    '-a', bench_command],
+                   cwd=self.app.terraform_provider_dir,
+                   env=self.app.app_env)
 
     @ex(help='Destroy all instances')
     def destroy(self):

@@ -1,5 +1,5 @@
 import os
-import os.path
+from os.path import join
 import sh
 from tinydb import TinyDB
 from cement import App, TestApp, init_defaults
@@ -103,10 +103,11 @@ class MixbytesTank(App):
         self.work_dir = fs.abspath('.')
         self.state_dir = self.work_dir + '/.tank/state/'
         self.log_dir = self.work_dir + '/.tank/log/'
-        self.provider = self.config.get(self.Meta.label, "provider")
         self.root_dir = os.path.realpath(os.path.dirname(__file__))+"/"
-        self.terraform_plan_dir = self.root_dir + \
-            "/providers/" + self.provider
+
+        self.provider = self.config.get(self.Meta.label, "provider")
+        self.terraform_provider_dir = join(self.root_dir, 'providers', self.provider)
+        self.terraform_plan_dir = self.terraform_provider_dir
         self.terraform_log_path = self.log_dir + 'terraform.log'
         self.terraform_run_command = self.config.get(self.Meta.label, 'terraform_run_command')
         self.terraform_inventory_run_command = self.config.get(self.Meta.label, 'terraform_inventory_run_command')
