@@ -111,38 +111,7 @@ class Cluster(Controller):
                 _bg=True)
         p.wait()
 
-
-class Deploy(Cluster):
-
-    class Meta:
-        label = 'deploy'
-        stacked_type = 'embedded'
-        stacked_on = 'base'
-
-        # text displayed at the top of --help output
-        description = 'OOOOOOO'
-
-        # text displayed at the bottom of --help output
-        title = 'Create and setup cluster'
-        help = 'Create instances for cluster, and setup components of blockchain and bench-util'
-
-    @ex(hide=True)
-    def create(self):
-        pass
-
-    @ex(hide=True)
-    def dependency(self):
-        pass
-
-    @ex(hide=True)
-    def provision(self):
-        pass
-
-    @ex(hide=True)
-    def destroy(self):
-        pass
-
-    @ex(help='Create and setup cluster')
+    @ex(help='Create and setup cluster (init, create, dependency, provision')
     def deploy(self):
         self.init()
         self.create()

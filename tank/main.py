@@ -5,7 +5,7 @@ from cement import App, TestApp, init_defaults
 from cement.core.exc import CaughtSignal
 from .core.exc import MixbytesTankError, TerraformNotAvailable
 from .controllers.base import Base
-from .controllers.cluster import Cluster, Deploy
+from .controllers.cluster import Cluster
 from cement.utils import fs
 import pkg_resources
 
@@ -71,8 +71,7 @@ class MixbytesTank(App):
         # register handlers
         handlers = [
             Base,
-            Cluster,
-            Deploy
+            Cluster
         ]
 
         # register hooks
