@@ -26,6 +26,21 @@ unzip terraform-inventory_v0.8_linux_amd64.zip
 sudo mv terraform-inventory /usr/local/bin/
 ```
 
+#### Optional: create virtualenv
+
+Optionally, create and activate virtualenv
+
+```shell
+sudo apt-get install -y python3-virtualenv
+python3 -m virtualenv -p python3 venv
+```
+
+After virtualenv creation and each time after opening a terminal, activate virtualenv to work with the tank:
+
+```shell
+. venv/bin/activate
+```
+
 #### Tank
 ```shell
 pip3 install tank-polkadot
