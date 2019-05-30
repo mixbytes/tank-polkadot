@@ -50,23 +50,39 @@ pip3 install tank-polkadot
 
 #### 1. Create cluster and provision with default blockchain
 
-Create config
+Create config at `~/.tank.yml`:
 
-```
-### ~/.tank.yml
----
+```yaml
 tank:
-  setup_id: "47956"
-  pvt_key: ~/.ssh/id_rsa
-  pub_key: ~/.ssh/id_rsa.pub
-  ssh_fingerprint: "a1:a1:a1:a1:a1:a1:a1:a1:a1:a1:a1:a1:a1:a1:a1:a1"
+  # unique ID of this test in your cloud account
+  setup_id: "440"
+
+  # key pair to manage benchmark instances
+  # it's recommended to create distinct key pair for benchmarking purposes
+  pvt_key: /home/admin/tank-polkadot/bench_key
+  pub_key: /home/admin/tank-polkadot/bench_key.pub
+  
+  # fingerprint of the public key
+  # in case of Digital Ocean you must add this key to your account at https://cloud.digitalocean.com/account/security
+  ssh_fingerprint: "3d:aa:76:55:25:4b:63:d3:e6:22:62:30:e0:9d:29:79"
+
+  # short name of benchmarked blockchain
   blockchain_name: "polkadot"
+
+  # blockchain bindings role repository and branch
   blockchain_ansible_repo: "https://github.com/mixbytes/tank.ansible-polkadot"
   blockchain_ansible_repo_version: "master"
+
+  # cloud provider to use
   provider: "digitalocean"
+
+  # number of validator instances to launch
   blockchain_instances: "2"
+
 digitalocean:
-  token: "****************************************"
+  # access token for particular cloud provider
+  # in case of Digital Ocean the token can be created at https://cloud.digitalocean.com/account/api/tokens
+  token: "..."
 ```
 
 #### 2. Deploy cluster
@@ -74,3 +90,10 @@ digitalocean:
 ```shell
 tank cluster deploy
 ```
+
+#### 3. Login into the monitoring
+
+Locate instance which name ends with `{your setup_id}-monitoring`, find the instance ip.
+Open in browser `http://{monitoring ip}:3000/dashboards`, username and password are `tank`.
+
+The dashboards can always be found at `http://{monitoring ip}:3000/dashboards`
