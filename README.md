@@ -97,3 +97,9 @@ Locate instance which name ends with `{your setup_id}-monitoring`, find the inst
 Open in browser `http://{monitoring ip}:3000/dashboards`, username and password are `tank`.
 
 The dashboards can always be found at `http://{monitoring ip}:3000/dashboards`
+
+#### 4. Create synthetic load
+
+```shell
+tank cluster bench
+```
