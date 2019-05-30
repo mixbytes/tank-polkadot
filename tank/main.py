@@ -122,8 +122,7 @@ class MixbytesTank(App):
         self.app_env["TF_DATA_DIR"] = self.state_dir
         self.app_env["TF_IN_AUTOMATION"] = "true"
         self.app_env["TF_VAR_state_path"] = self.terraform_state_file
-        self.app_env["TF_VAR_bc_count_prod_instances"] = \
-            str(int(self.config.get(self.Meta.label, 'blockchain_instances')) - 1)
+        self.app_env["TF_VAR_bc_count_prod_instances"] = str(self.blockchain_instances - 1)
         for common_key in self.config.keys(self.Meta.label):
             self.app_env["TF_VAR_" + common_key] = \
                 self.config.get(self.Meta.label, common_key)
@@ -134,6 +133,10 @@ class MixbytesTank(App):
             self.state_dir + "/roles"
         self.app_env["ANSIBLE_CONFIG"] = \
             self.root_dir + "/tools/ansible/ansible.cfg"
+
+    @property
+    def blockchain_instances(self):
+        return int(self.config.get(self.Meta.label, 'blockchain_instances'))
 
 
 class MixbytesTankTest(TestApp, MixbytesTank):

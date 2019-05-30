@@ -101,5 +101,5 @@ The dashboards can always be found at `http://{monitoring ip}:3000/dashboards`
 #### 4. Create synthetic load
 
 ```shell
-tank cluster bench
+tank cluster bench [--tps N]
 ```

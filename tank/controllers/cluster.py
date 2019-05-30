@@ -101,10 +101,20 @@ class Cluster(Controller):
                 _bg=True)
         p.wait()
 
-    @ex(help='Runs bench on prepared cluster')
+    @ex(help='Runs bench on prepared cluster',
+        arguments=[
+            (['--tps'],
+             {'help': 'set global transactions per second generation rate',
+              'type': int}),
+        ])
     def bench(self):
         bench_command = 'bench --common-config=/tool/bench.config.json ' \
                         '--module-config=/tool/polkadot.bench.config.json'
+        if self.app.pargs.tps:
+            # FIXME extract blockchain_instances from inventory
+            per_node_tps = max(int(self.app.pargs.tps / self.app.blockchain_instances), 1)
+            bench_command += ' --common.tps {}'.format(per_node_tps)
+
         check_call(['ansible', '-f', '100', '-B', '3600', '-P', '10', '-u', 'root',
                     '-i', self.app.terraform_inventory_run_command,
                     '--private-key', self.app.config.get(self.app.label, 'pvt_key'),
