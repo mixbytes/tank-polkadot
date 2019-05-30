@@ -91,7 +91,7 @@ class Cluster(Controller):
                 "-f", "10", "-u", "root", "-i",
                 self.app.terraform_inventory_run_command,
                 "-e", "bc_private_interface='"+self.app.config.get(self.app.provider, "private_interface")+"'",
-                "--private-key=~/.ssh/id_rsa",
+                "--private-key={}".format(self.app.config.get(self.app.label, 'pvt_key')),
                 self.app.root_dir+"/tools/ansible/play.yml",
                 _cwd=self.app.terraform_plan_dir,
                 _env=self.app.app_env,
