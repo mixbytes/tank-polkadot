@@ -72,5 +72,5 @@ digitalocean:
 #### 2. Deploy cluster
 
 ```shell
-tank deploy
+tank cluster deploy
 ```

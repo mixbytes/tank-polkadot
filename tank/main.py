@@ -104,7 +104,7 @@ class MixbytesTank(App):
         self.state_dir = self.work_dir + '/.tank/state/'
         self.log_dir = self.work_dir + '/.tank/log/'
         self.provider = self.config.get(self.Meta.label, "provider")
-        self.root_dir = os.path.realpath(os.path.dirname(__file__))
+        self.root_dir = os.path.realpath(os.path.dirname(__file__))+"/"
         self.terraform_plan_dir = self.root_dir + \
             "/providers/" + self.provider
         self.terraform_log_path = self.log_dir + 'terraform.log'
