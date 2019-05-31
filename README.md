@@ -107,3 +107,9 @@ tank cluster bench [--tps N] [--total-tx N]
 `--tps` - global transactions per second generation rate,
 
 `--total-tx` - how many transactions to send (total).
+
+#### 5. Shutdown and remove the cluster
+
+```shell
+tank cluster destroy
+```
