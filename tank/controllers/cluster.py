@@ -106,6 +106,9 @@ class Cluster(Controller):
             (['--tps'],
              {'help': 'set global transactions per second generation rate',
               'type': int}),
+            (['--total-tx'],
+             {'help': 'how many transactions to send',
+              'type': int}),
         ])
     def bench(self):
         bench_command = 'bench --common-config=/tool/bench.config.json ' \
@@ -114,6 +117,11 @@ class Cluster(Controller):
             # FIXME extract blockchain_instances from inventory
             per_node_tps = max(int(self.app.pargs.tps / self.app.blockchain_instances), 1)
             bench_command += ' --common.tps {}'.format(per_node_tps)
+
+        if self.app.pargs.total_tx:
+            # FIXME extract blockchain_instances from inventory
+            per_node_tx = max(int(self.app.pargs.total_tx / self.app.blockchain_instances), 1)
+            bench_command += ' --common.stopOn.processedTransactions {}'.format(per_node_tx)
 
         check_call(['ansible', '-f', '100', '-B', '3600', '-P', '10', '-u', 'root',
                     '-i', self.app.terraform_inventory_run_command,
