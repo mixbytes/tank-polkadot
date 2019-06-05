@@ -50,7 +50,11 @@ pip3 install tank-polkadot
 
 #### 1. Create cluster and provision with default blockchain
 
-Create config at `~/.tank.yml` and adjust it to your setup (see the inline comments below):
+Create config at `~/.tank.yml` and adjust it to your setup (see the inline comments below).
+The essential steps are:
+* providing (and possibly creating) a key pair;
+* registering the public key with your cloud provider if needed;
+* specifying a cloud provider access token.
 
 ```yaml
 tank:
