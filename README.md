@@ -50,28 +50,34 @@ pip3 install tank-polkadot
 
 #### 1. Create cluster and provision with default blockchain
 
-Create config at `~/.tank.yml`:
+Create config at `~/.tank.yml` and adjust it to your setup (see the inline comments below):
 
 ```yaml
 tank:
-  # unique ID of this test in your cloud account
+  # Unique ID of this test in your cloud account.
+  # This ID prevents collisions of resources of different clusters created by Tank.
+  # If you are planning to run multiple clusters simultaneously, make sure they have different setup_id.
   setup_id: "440"
 
-  # key pair to manage benchmark instances
-  # it's recommended to create distinct key pair for benchmarking purposes
-  # The simplest way is ssh-keygen -t rsa -b 2048 -f bench_key
+  # Key pair to manage benchmark instances.
+  # It's recommended to create a distinct key pair for benchmarking purposes.
+  # The simplest way is:
+  #   ssh-keygen -t rsa -b 2048 -f bench_key
   # (leave passphrase empty)
+  # Please provide the full path to the key pair.
   pvt_key: /home/admin/tank-polkadot/bench_key
   pub_key: /home/admin/tank-polkadot/bench_key.pub
   
-  # fingerprint of the public key
-  # in case of Digital Ocean you must add this key to your account at https://cloud.digitalocean.com/account/security
+  # MD5 fingerprint of the public key.
+  # Please note, in case of Digital Ocean you must add this key to your account at https://cloud.digitalocean.com/account/security (you can also get the fingerprint there).
   ssh_fingerprint: "3d:aa:76:55:25:4b:63:d3:e6:22:62:30:e0:9d:29:79"
 
-  # short name of benchmarked blockchain
+  # short name of the benchmarked blockchain
+  # (could be left as-is)
   blockchain_name: "polkadot"
 
-  # blockchain bindings role repository and branch
+  # the blockchain bindings role repository and branch
+  # (could be left as-is)
   blockchain_ansible_repo: "https://github.com/mixbytes/tank.ansible-polkadot"
   blockchain_ansible_repo_version: "master"
 
@@ -82,8 +88,8 @@ tank:
   blockchain_instances: "2"
 
 digitalocean:
-  # access token for particular cloud provider
-  # in case of Digital Ocean the token can be created at https://cloud.digitalocean.com/account/api/tokens
+  # Access token for a particular cloud provider.
+  # In case of Digital Ocean the token can be created at https://cloud.digitalocean.com/account/api/tokens.
   token: "..."
 ```
 
