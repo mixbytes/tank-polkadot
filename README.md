@@ -59,6 +59,8 @@ tank:
 
   # key pair to manage benchmark instances
   # it's recommended to create distinct key pair for benchmarking purposes
+  # The simplest way is ssh-keygen -t rsa -b 2048 -f bench_key
+  # (leave passphrase empty)
   pvt_key: /home/admin/tank-polkadot/bench_key
   pub_key: /home/admin/tank-polkadot/bench_key.pub
   
