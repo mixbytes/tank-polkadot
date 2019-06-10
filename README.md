@@ -22,7 +22,7 @@ sudo mv terraform /usr/local/bin/
 ```shell
 export terraform_inventory_ver="v0.8"
 wget https://github.com/adammck/terraform-inventory/releases/download/${terraform_inventory_ver}/terraform-inventory_${terraform_inventory_ver}_linux_amd64.zip
-unzip terraform-inventory_v0.8_linux_amd64.zip
+unzip terraform-inventory_${terraform_inventory_ver}_linux_amd64.zip
 sudo mv terraform-inventory /usr/local/bin/
 ```
 
