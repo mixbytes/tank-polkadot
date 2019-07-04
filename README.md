@@ -1,5 +1,7 @@
 # MixBytes Tank for Polkadot
 
+**Obsoleted! Please see https://github.com/mixbytes/tank**
+
 ### Requirements
 
 - Python3
